@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract CHANGELOG section
+        id: changelog
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          # Extract section between "## [VERSION]" and the next "## [" header
+          awk "/^## \[$VERSION\]/{flag=1; next} /^## \[/{flag=0} flag" CHANGELOG.md > release-notes.md || true
+          if [ ! -s release-notes.md ]; then
+            echo "No CHANGELOG entry found for $VERSION; using fallback." >&2
+            echo "Release $VERSION" > release-notes.md
+          fi
+          echo "--- release-notes.md ---"
+          cat release-notes.md
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          body_path: release-notes.md
+          name: v${{ steps.changelog.outputs.version }}
+          draft: false
+          prerelease: false

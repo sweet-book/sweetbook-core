@@ -1,5 +1,7 @@
 # sweetbook_core
 
+[![CI](https://github.com/sweet-book/sweetbook-core/actions/workflows/ci.yml/badge.svg)](https://github.com/sweet-book/sweetbook-core/actions/workflows/ci.yml)
+
 SweetBook 포토북 **코어 패키지** — 도메인 모델 + 미리보기 렌더러.
 
 ## 구성
