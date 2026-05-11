@@ -1,6 +1,6 @@
 name: sweetbook_core
 description: "SweetBook photobook core: domain models (Photo, Template, PhotoBook, etc.) plus the PhotoBookPageView preview renderer widget. Web, mobile, and desktop compatible."
-version: 0.1.0
+version: 0.2.0
 publish_to: 'none'
 
 environment:
